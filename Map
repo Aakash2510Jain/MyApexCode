@@ -1,1 +1,15 @@
-
+Map<String ,List<Course_Enrollment__c>> mentorEnrolledForCourse = new Map<String ,List<Course_Enrollment__c>>();
+List<Course_Enrollment__c> courseEnrollmentList = [SELECT Applied_by__c,Contact__c,Course_Master__r.Name,Enrollment_Date__c,Id,Name,RecordTypeId,Schedule_Start_Date__c,Status__c FROM Course_Enrollment__c];
+for(Course_Enrollment__c courseEnrollmentRec : courseEnrollmentList){
+            courseEnrollmentType.add(courseEnrollmentRec.Course_Master__r.Name);// course master name
+            system.debug('courseEnrollmentRec.RecordTypeId'+courseEnrollmentRec.RecordTypeId+'courseEnrollmentRec.Status__c'+courseEnrollmentRec.Status__c);
+            if(courseEnrollmentRec.RecordTypeId == MentorrecTypeID && courseEnrollmentRec.Status__c =='Requested by Mentor'){
+                system.debug('Mentor');
+                if(mentorEnrolledForCourse.containsKey(courseEnrollmentRec.Course_Master__r.Name)){
+                    List<Course_Enrollment__c> newCourseEnrollmentList = mentorEnrolledForCourse.get(courseEnrollmentRec.Course_Master__r.Name);
+                    newCourseEnrollmentList.add(courseEnrollmentRec);
+                    mentorEnrolledForCourse.put(courseEnrollmentRec.Course_Master__r.Name,newCourseEnrollmentList);  
+                }else{
+                    mentorEnrolledForCourse.put(courseEnrollmentRec.Course_Master__r.Name,new List<Course_Enrollment__c>{courseEnrollmentRec});
+                }
+            }
