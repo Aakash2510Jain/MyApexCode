@@ -1,1 +1,1 @@
-
+string MentorrecTypeID = Schema.SobjectType.Course_Enrollment__c.getRecordTypeInfosByName().get('Mentor').getRecordTypeId();
