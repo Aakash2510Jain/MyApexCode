@@ -1,1 +1,6 @@
+Get Random records 
 
+Integer count = [SELECT COUNT() FROM Assessment_Question__c];
+Integer rand = Math.floor(Math.random() * count).intValue();
+List<Assessment_Question__c> c = [SELECT Name FROM Assessment_Question__c LIMIT 10 OFFSET :rand];
+system.debug('c::>'+c);
